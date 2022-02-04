@@ -1,14 +1,12 @@
 const main = document.querySelector('.main');
 
 const playfield = [
-  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -21,6 +19,8 @@ const playfield = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
+  [0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
 ];
 
 let gameSpeed = 400;
@@ -31,6 +31,8 @@ const draw = () => {
     row.forEach((cell) => {
       if (cell === 1) {
         mainInnerHTML += `<div class='cell moving-cell'></div>`;
+      } else if (cell === 2) {
+        mainInnerHTML += `<div class='cell fixed-cell'></div>`;
       } else {
         mainInnerHTML += `<div class='cell'></div>`;
       }
@@ -44,7 +46,7 @@ const canTetroMoveDown = () => {
   for (let y = 0; y < playfield.length; y++) {
     for (let x = 0; x < playfield[y].length; x++) {
       if (playfield[y][x] === 1) {
-        if (y === playfield.length - 1) {
+        if (y === playfield.length - 1 || playfield[y + 1][x] === 2) {
           return false;
         }
       }
