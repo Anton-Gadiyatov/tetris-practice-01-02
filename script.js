@@ -48,7 +48,7 @@ const canTetroMoveLeft = () => {
   for (let y = 0; y < playfield.length; y++) {
     for (let x = 0; x < playfield[y].length; x++) {
       if (playfield[y][x] === 1) {
-        if (x === 0) {
+        if (x === 0 || playfield[y][x - 1] === 2) {
           return false;
         }
       }
@@ -57,14 +57,40 @@ const canTetroMoveLeft = () => {
   return true;
 };
 
-// (let x = playfield[y].length - 1; x >= 0; x--)
-
 const moveTetroLeft = () => {
   if (canTetroMoveLeft()) {
     for (let y = playfield.length - 1; y >= 0; y--) {
       for (let x = 0; x < playfield[y].length; x++) {
         if (playfield[y][x] === 1) {
           playfield[y][x - 1] = 1;
+          playfield[y][x] = 0;
+        }
+      }
+    }
+  }
+};
+
+// Движение фигурки вправо
+
+const canTetroMoveRight = () => {
+  for (let y = 0; y < playfield.length; y++) {
+    for (let x = 0; x < playfield[y].length; x++) {
+      if (playfield[y][x] === 1) {
+        if (x === playfield[0].length - 1 || playfield[y][x + 1] === 2) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+};
+
+const moveTetroRight = () => {
+  if (canTetroMoveRight()) {
+    for (let y = playfield.length - 1; y >= 0; y--) {
+      for (let x = playfield[y].length - 1; x >= 0; x--) {
+        if (playfield[y][x] === 1) {
+          playfield[y][x + 1] = 1;
           playfield[y][x] = 0;
         }
       }
@@ -121,10 +147,9 @@ draw();
 
 document.onkeydown = (e) => {
   if (e.key === 'ArrowLeft') {
-    console.log('ArrowLeft');
     moveTetroLeft();
   } else if (e.key === 'ArrowRight') {
-    console.log('ArrowRight');
+    moveTetroRight();
   } else if (e.key === 'ArrowDown') {
     console.log('ArrowDown');
   }
