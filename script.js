@@ -128,6 +128,21 @@ const moveTetroDown = () => {
   }
 };
 
+const checkFullLines = () => {
+  for (let y = 0; y < playfield.length; y++) {
+    let canRemoveLine = true;
+    for (let x = 0; x < playfield[y].length; x++) {
+      if (playfield[y][x] !== 2) {
+        canRemoveLine = false;
+      }
+    }
+    if (canRemoveLine) {
+      playfield.splice(y, 1);
+      playfield.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    }
+  }
+};
+
 // Фиксация фигурки
 
 const fixTetro = () => {
@@ -139,8 +154,10 @@ const fixTetro = () => {
     }
   }
 
-  playfield[0] = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
-  playfield[1] = [0, 0, 0, 1, 1, 1, 0, 0, 0, 0];
+  checkFullLines();
+
+  playfield[0] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0];
+  playfield[1] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0];
 };
 
 draw();
@@ -151,8 +168,9 @@ document.onkeydown = (e) => {
   } else if (e.key === 'ArrowRight') {
     moveTetroRight();
   } else if (e.key === 'ArrowDown') {
-    console.log('ArrowDown');
+    moveTetroDown();
   }
+  draw();
 };
 
 const startGame = () => {
