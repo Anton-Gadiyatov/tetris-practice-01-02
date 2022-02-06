@@ -128,6 +128,8 @@ const moveTetroDown = () => {
   }
 };
 
+// Удаление готовой линии
+
 const checkFullLines = () => {
   for (let y = 0; y < playfield.length; y++) {
     let canRemoveLine = true;
