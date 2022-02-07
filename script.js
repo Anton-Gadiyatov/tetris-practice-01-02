@@ -136,6 +136,7 @@ const checkFullLines = () => {
     for (let x = 0; x < playfield[y].length; x++) {
       if (playfield[y][x] !== 2) {
         canRemoveLine = false;
+        return;
       }
     }
     if (canRemoveLine) {
