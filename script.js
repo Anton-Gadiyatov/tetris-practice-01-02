@@ -3,9 +3,6 @@ const main = document.querySelector('.main');
 const playfield = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -19,11 +16,23 @@ const playfield = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
-  [0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 let gameSpeed = 400;
+let activeTetro = {
+  x: 0,
+  y: 0,
+  shape: [
+    [1, 1, 1],
+    [0, 1, 0],
+    [0, 0, 0],
+  ],
+};
 
 const draw = () => {
   let mainInnerHTML = '';
@@ -146,6 +155,19 @@ const checkFullLines = () => {
   }
 };
 
+// Добавление фигурки на поле
+
+const addActiveTetro = () => {
+  for (let y = 0; y < activeTetro.shape.length; y++) {
+    for (let x = 0; x < activeTetro.shape[y].length; x++) {
+      if (activeTetro.shape[y][x]) {
+        playfield[activeTetro.y + y][activeTetro.x + x] =
+          activeTetro.shape[y][x];
+      }
+    }
+  }
+};
+
 // Фиксация фигурки
 
 const fixTetro = () => {
@@ -163,8 +185,6 @@ const fixTetro = () => {
   playfield[1] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0];
 };
 
-draw();
-
 document.onkeydown = (e) => {
   if (e.key === 'ArrowLeft') {
     moveTetroLeft();
@@ -176,10 +196,13 @@ document.onkeydown = (e) => {
   draw();
 };
 
-const startGame = () => {
-  moveTetroDown();
-  draw();
-  setTimeout(startGame, gameSpeed);
-};
+addActiveTetro();
+draw();
 
-setTimeout(startGame, gameSpeed);
+// const startGame = () => {
+//   moveTetroDown();
+//   draw();
+//   setTimeout(startGame, gameSpeed);
+// };
+
+// setTimeout(startGame, gameSpeed);
